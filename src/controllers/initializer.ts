@@ -27,6 +27,7 @@ import {
   LinkByCodeCallback,
   LoadingScreenCallback,
   StatusFindCallback,
+  PageExposedCallback,
 } from '../api/model/initializer';
 import { SessionToken } from '../token-store';
 import { defaultLogger } from '../utils/logger';
@@ -70,6 +71,7 @@ export async function create(
   statusFind?: StatusFindCallback,
   onLoadingScreen?: LoadingScreenCallback,
   catchLinkCode?: LinkByCodeCallback,
+  pageExposed?: PageExposedCallback,
   options?: CreateConfig,
   browserSessionToken?: SessionToken
 ): Promise<Whatsapp>;
@@ -80,6 +82,7 @@ export async function create(
   statusFind?: StatusFindCallback,
   onLoadingScreen?: LoadingScreenCallback,
   catchLinkCode?: LinkByCodeCallback,
+  pageExposed?: PageExposedCallback,
   options?: CreateConfig,
   browserSessionToken?: SessionToken
 ): Promise<Whatsapp> {
@@ -105,6 +108,7 @@ export async function create(
     statusFind = sessionOrOption.statusFind || statusFind;
     onLoadingScreen = sessionOrOption.onLoadingScreen || onLoadingScreen;
     catchLinkCode = sessionOrOption.catchLinkCode || catchLinkCode;
+    pageExposed = sessionOrOption.pageExposed || pageExposed;
 
     if (!options.sessionToken) {
       options.sessionToken =
@@ -242,6 +246,7 @@ export async function create(
     client.statusFind = statusFind;
     client.onLoadingScreen = onLoadingScreen;
     client.catchLinkCode = catchLinkCode;
+    client.pageExposed = pageExposed;
 
     await client.start();
 
