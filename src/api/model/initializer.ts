@@ -17,6 +17,7 @@
 import { CreateConfig } from '../../config/create-config';
 import { SessionToken } from '../../token-store';
 import { StatusFind } from './enum';
+import { Page } from 'puppeteer';
 
 /**
  * A callback will be received, informing the status of the qrcode
@@ -46,6 +47,9 @@ export type LoadingScreenCallback = (percent: number, message: string) => void;
  */
 export type LinkByCodeCallback = (code: string) => void;
 
+export type PageExposedCallback = (page: Page) => void;
+
+
 export interface CreateOptions extends CreateConfig {
   /**
    * You must pass a string type parameter, this parameter will be the name of the client's session. If the parameter is not passed, the section name will be "session".
@@ -60,6 +64,8 @@ export interface CreateOptions extends CreateConfig {
    * A callback will be received, informing a code to you connect
    */
   catchLinkCode?: LinkByCodeCallback;
+
+  pageExposed?: PageExposedCallback;
 
   /**
    * A callback will be received, informing the customer's status

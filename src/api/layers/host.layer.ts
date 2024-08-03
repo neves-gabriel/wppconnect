@@ -33,6 +33,7 @@ import {
   HostDevice,
   LinkByCodeCallback,
   LoadingScreenCallback,
+  PageExposedCallback,
   StatusFindCallback,
 } from '../model';
 import { SocketState } from '../model/enum';
@@ -59,6 +60,7 @@ export class HostLayer {
   public statusFind?: StatusFindCallback = null;
   public onLoadingScreen?: LoadingScreenCallback = null;
   public catchLinkCode?: LinkByCodeCallback = null;
+  public pageExposed?: PageExposedCallback = null;
 
   constructor(public page: Page, session?: string, options?: CreateConfig) {
     this.session = session;
@@ -146,6 +148,7 @@ export class HostLayer {
     evaluateAndReturn(this.page, () => {
       WPP.on('conn.main_ready', (window as any).checkInChat);
     }).catch(() => null);
+    this.exposePage();
     this.checkInChat();
     this.checkQrCode();
   }
@@ -596,5 +599,9 @@ export class HostLayer {
       (value) => WPP.conn.joinWebBeta(value),
       value
     );
+  }
+
+  private exposePage() {
+    this.pageExposed(this.page);
   }
 }
